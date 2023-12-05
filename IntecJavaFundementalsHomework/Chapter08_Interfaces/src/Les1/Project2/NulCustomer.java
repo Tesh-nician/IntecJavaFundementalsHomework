@@ -1,4 +1,4 @@
-package Project2;
+package Project2_PostCardCollection;
 
 public class NulCustomer extends AbstractCustomer {
     @Override

@@ -1,4 +1,4 @@
-package Project2;
+package Project2_PostCardCollection;
 
 public class NullPatternDemo {
     public static void main(String[] args) {

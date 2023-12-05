@@ -1,4 +1,4 @@
-package Project2;
+package Project2_PostCardCollection;
 
 import java.util.Arrays;
 

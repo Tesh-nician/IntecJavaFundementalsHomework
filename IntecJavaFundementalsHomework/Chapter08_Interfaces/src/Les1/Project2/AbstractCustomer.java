@@ -1,4 +1,4 @@
-package Project2;
+package Project2_PostCardCollection;
 
 public abstract class AbstractCustomer {
     protected String name;

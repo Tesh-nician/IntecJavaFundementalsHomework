@@ -1,10 +1,11 @@
-package Project2;
+package Project2_PostCardCollection;
 
 import java.util.*;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 public class PostCardApp {
+
+
     public static void main(String[] args) {
 
         PostCard belgium = new PostCard("Belgium", "Europe");
@@ -126,33 +127,11 @@ public class PostCardApp {
         //HINT2: Een Set kan ook helpen;
         //Print dan het resultaat uit.
 
+        duplicateRemover(yourPostCardList); //voor de methode zie onderaan;
 
 
 
 
-
-
-
-
-        //make Set copy of original list (so no duplicates will appear in this list!), Treeset to provide some sorting.
-        TreeSet<PostCard> originalNoDuplicateList = new TreeSet<>((PostCard p1,PostCard p2) -> p1.country.compareTo(p2.country)); //Gevonden https://www.geeksforgeeks.org/creating-treeset-with-comparator-by-user-define-objects-in-java/
-        originalNoDuplicateList.addAll(yourPostCardList);
-
-        //make a copy of original postcard list and sort it (easier for debugging)
-        List<PostCard>copyOfOriginalList = yourPostCardList;
-        copyOfOriginalList.sort(Comparator.comparing(PostCard::getCountry));
-
-        //System.out.println("TreeSet copy of original list: \n"+originalNoDuplicateList);// for debugging
-
-        //iterate through set and remove the originals from the list with duplicates
-        originalNoDuplicateList.forEach(copyOfOriginalList::remove);
-
-        //this leaves only the duplicates in the list
-        System.out.println("list of duplicate cards: \n"+copyOfOriginalList);
-
-        System.out.println("Duplicates per country: ");
-        copyOfOriginalList.stream().distinct().forEach(postCard -> {
-            System.out.println(postCard.country + " "+ Collections.frequency(copyOfOriginalList,postCard));});
 
 
 
@@ -186,6 +165,42 @@ public class PostCardApp {
         //Bevestiging: https://stackoverflow.com/questions/1795527/how-is-the-java-priority-queue-supposed-to-work
 
         while (!sortedFriend.isEmpty()) { System.out.println(sortedFriend.poll());}
+
+
+    }
+
+    static public void duplicateRemover(List<PostCard> yourPostCardList){
+        //Opdracht3
+        //Je systeem is nog niet optimaal genoeg, en je beslist je dubbeltjes uit je hoop kaarten te halen.
+        //Maak een methode die kijkt hoeveel kaarten je van een bepaald land hebt, en de extras dan toevoegt
+        //aan een nieuwe List. Zorg ervoor dat de dubbele kaarten niet meer in de oude lijst zijn. Print dan uit
+        //hoeveel dubbele kaarten je hebt in de nieuwe lijst.
+        //HINT: gebruik Collections.frequency();
+        //HINT2: Een Set kan ook helpen;
+        //Print dan het resultaat uit.
+
+
+        //make Set copy of original list (so no duplicates will appear in this list!), Treeset to provide some sorting.
+        TreeSet<PostCard> originalNoDuplicateList = new TreeSet<>((PostCard p1,PostCard p2) -> p1.country.compareTo(p2.country)); //Gevonden https://www.geeksforgeeks.org/creating-treeset-with-comparator-by-user-define-objects-in-java/
+        originalNoDuplicateList.addAll(yourPostCardList);
+
+        //make a copy of original postcard list and sort it (easier for debugging)
+        List<PostCard>copyOfOriginalList = yourPostCardList;
+        copyOfOriginalList.sort(Comparator.comparing(PostCard::getCountry));
+
+        //System.out.println("TreeSet copy of original list: \n"+originalNoDuplicateList);// for debugging
+
+        //iterate through set and remove the originals from the list with duplicates
+        originalNoDuplicateList.forEach(copyOfOriginalList::remove);
+
+        //this leaves only the duplicates in the list
+        System.out.println("list of duplicate cards: \n"+copyOfOriginalList);
+
+        System.out.println("Duplicates per country: ");
+        copyOfOriginalList.stream().distinct().forEach(postCard -> {
+            System.out.println(postCard.country + " "+ Collections.frequency(copyOfOriginalList,postCard));});
+
+
 
 
     }
