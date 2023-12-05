@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class PandemicMain {
     public static <Int> void main(String[] args) {
 
-        System.out.println("\n*********************************************************************$\nOPDRACHT 1:");
+        System.out.println("\n*********************************************************************\nOPDRACHT 1:");
         //Opdracht 1( /1 ):
         //De hoofdverpleegster wilt dat je alle patienten in een lijst stopt die ervoor zorgt dat elke
         //Patient er maar 1 keer in voorkomt, liefst op volgorde dat ze binnen kwamen. => LinkedHashSet
@@ -18,7 +18,7 @@ public class PandemicMain {
 
         System.out.println("List of patients (LinkedHashSet):\n"+patientsUniqueList);
 
-        System.out.println("\n*********************************************************************$\nOPDRACHT 2:");
+        System.out.println("\n*********************************************************************\nOPDRACHT 2:");
         //Opdracht 2 ( /3 ):
         //Terwijl dat je de lijst aan het opmaken ben, krijgen jullie een noodbericht van de regering: er is een
         //nieuw onbekend virus uitgebroken!
@@ -54,7 +54,7 @@ public class PandemicMain {
         System.out.println("\nOpdracht2 bonus - Patient Queue:\n"+patientsQueue);
 
 
-        System.out.println("\n*********************************************************************$\nOPDRACHT 3:");
+        System.out.println("\n*********************************************************************\nOPDRACHT 3:");
 
 //Opdracht 3 ( /4 ):
 //De regering geeft als laatste opdracht om patiënten van elkaar te isoleren, want ze mogen
@@ -75,28 +75,58 @@ public class PandemicMain {
 //int key = category.getKey();
 ////use a method to iterate over your patientsList}
 
-        HashMap<Int,Patient> categoryQueue = new HashMap<>(); //key = 1-4, value = Patient
+        HashMap<Integer,Patient> categoryQueue = new HashMap<>(); //key = 1-4, value = Patient
 
-        int category;
+        System.out.println("Printing patientsQueue: (before categorisation) ");
+        while (!patientsUniqueList.isEmpty()) {
+            System.out.println(patientsQueue.poll());
+        }
 
-        //patientsQueue.for
+ //iterate through queue and add patients to the hashmap with their respective category.
+        for (Patient patient : patientsQueue) {
+            //((patient.getAge<=65 &&
+            //patient.getTemperature >=38) || patient.getTemperature()>=40) && patient.isUnknownVirus())
+            if ((patient.getTemperature()>=40&& patient.isUnknownVirus())
+                    ||(patient.getAge()>=65&&patient.getTemperature()>=38&& patient.isUnknownVirus())) {
+                        Integer category = 1;
+                        categoryQueue.put(category,patientsQueue.remove());  //return value van patientsQueue.remove() = patient!!
+            }
+
+            //Cat 2: De rest van de bevolking die met gewone koorts of hoger (>=38) loopt, en het
+            //onbekende virus in hun hebben.
+            else if ((patient.isUnknownVirus())&&(patient.getTemperature()>=38)) {
+                        Integer category = 2;
+                        categoryQueue.put(category,patientsQueue.remove());  //return value van patientsQueue.remove() = patient!!
+            }
+
+            //Category 3: Mensen die het onbekende virus hebben, maar geen koorts.
+            else if ((patient.isUnknownVirus())&&(patient.getTemperature()<38)) {
+                        Integer category = 3;
+                        categoryQueue.put(category,patientsQueue.remove()); //return value van patientsQueue.remove() = patient!!
+            }
+
+            //Category 4: Mensen die koorts hebben (>=38) maar met een bekend virus rondlopen.
+            else if ((!patient.isUnknownVirus())&&(patient.getTemperature()>=38)) {
+                        Integer category = 2;
+                        categoryQueue.put(category,patientsQueue.remove()); //return value van patientsQueue.remove() = patient!!
+            }
+
+        } //end for-each
+        //Print zowel de resultaten van de Map af, als de inhoud van de Queue, die leeg moet zijn.
+//Je kunt het volgende gebruiken voor over je Map te itereren.
+//for(Map.Entry<Integer, List<Patient>> category : mapCollection.entrySet()){
+//int key = category.getKey();
+
+        System.out.println("Printing patientsQueue: (after categorisation) ");
+        while (!patientsUniqueList.isEmpty()) {
+            System.out.println(patientsQueue.poll());
+        }
+
+        System.out.println("Printing categoryQueque (HashMap: ");
+
+        System.out.println(categoryQueue);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
+        }
 }
