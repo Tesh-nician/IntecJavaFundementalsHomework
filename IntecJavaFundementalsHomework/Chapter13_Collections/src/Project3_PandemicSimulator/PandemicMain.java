@@ -74,16 +74,18 @@ public class PandemicMain {
 //for(Map.Entry<Integer, List<Patient>> category : mapCollection.entrySet()){
 //int key = category.getKey();
 ////use a method to iterate over your patientsList}
+        System.out.println("patientsQueue before categorisation:\n"+patientsQueue);
 
         HashMap<Integer,Patient> categoryQueue = new HashMap<>(); //key = 1-4, value = Patient
+        Queue<Patient> temporaryPatientsQueue = new LinkedList<>(); // making a temporary copy for iteration
+        temporaryPatientsQueue.addAll(patientsQueue);               //to avoid ConcurrentModificationException
 
-        System.out.println("Printing patientsQueue: (before categorisation) ");
-        while (!patientsUniqueList.isEmpty()) {
-            System.out.println(patientsQueue.poll());
-        }
+
+
+
 
  //iterate through queue and add patients to the hashmap with their respective category.
-        for (Patient patient : patientsQueue) {
+        for (Patient patient : temporaryPatientsQueue) {
             //((patient.getAge<=65 &&
             //patient.getTemperature >=38) || patient.getTemperature()>=40) && patient.isUnknownVirus())
             if ((patient.getTemperature()>=40&& patient.isUnknownVirus())
@@ -118,9 +120,9 @@ public class PandemicMain {
 //int key = category.getKey();
 
         System.out.println("Printing patientsQueue: (after categorisation) ");
-        while (!patientsUniqueList.isEmpty()) {
-            System.out.println(patientsQueue.poll());
-        }
+
+            System.out.println(patientsQueue);
+
 
         System.out.println("Printing categoryQueque (HashMap: ");
 
