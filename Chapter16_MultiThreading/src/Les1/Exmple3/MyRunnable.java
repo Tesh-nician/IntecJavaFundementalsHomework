@@ -3,7 +3,7 @@ package Les1.Exmple3;
 public class MyRunnable implements Runnable {
     @Override
     public void run() {
-        for (int i = 10; i > 10; i--) {
+        for (int i = 10; i > 0; i--) {
             System.out.println("Thread#2: " + i);
 
 
