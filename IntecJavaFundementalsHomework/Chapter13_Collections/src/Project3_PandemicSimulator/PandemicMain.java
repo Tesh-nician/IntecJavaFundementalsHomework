@@ -75,10 +75,15 @@ public class PandemicMain {
 //int key = category.getKey();
 ////use a method to iterate over your patientsList}
         System.out.println("patientsQueue before categorisation:\n"+patientsQueue);
+        System.out.println("patientsqueue size:"+patientsQueue.size());
 
-        HashMap<Integer,Patient> categoryQueue = new HashMap<>(); //key = 1-4, value = Patient
+
+        HashMap<Patient, Integer> categoryQueue = new HashMap<>(); //key = 1-4, value = Patient
         Queue<Patient> temporaryPatientsQueue = new LinkedList<>(); // making a temporary copy for iteration
         temporaryPatientsQueue.addAll(patientsQueue);               //to avoid ConcurrentModificationException
+
+        System.out.println("categoryqueue size:"+categoryQueue.size());
+
 
 
 
@@ -86,31 +91,36 @@ public class PandemicMain {
 
  //iterate through queue and add patients to the hashmap with their respective category.
         for (Patient patient : temporaryPatientsQueue) {
+           // System.out.println(patient);//debugging
             //((patient.getAge<=65 &&
             //patient.getTemperature >=38) || patient.getTemperature()>=40) && patient.isUnknownVirus())
             if ((patient.getTemperature()>=40&& patient.isUnknownVirus())
                     ||(patient.getAge()>=65&&patient.getTemperature()>=38&& patient.isUnknownVirus())) {
                         Integer category = 1;
-                        categoryQueue.put(category,patientsQueue.remove());  //return value van patientsQueue.remove() = patient!!
+                        categoryQueue.put(patientsQueue.poll(),category);  //return value van patientsQueue.remove() = patient!!
+                System.out.println("cat1 "+patient);//debug
             }
 
             //Cat 2: De rest van de bevolking die met gewone koorts of hoger (>=38) loopt, en het
             //onbekende virus in hun hebben.
             else if ((patient.isUnknownVirus())&&(patient.getTemperature()>=38)) {
                         Integer category = 2;
-                        categoryQueue.put(category,patientsQueue.remove());  //return value van patientsQueue.remove() = patient!!
+                        categoryQueue.put(patientsQueue.poll(), category);  //return value van patientsQueue.remove() = patient!!
+                System.out.println("cat2 "+patient);//debug
             }
 
             //Category 3: Mensen die het onbekende virus hebben, maar geen koorts.
             else if ((patient.isUnknownVirus())&&(patient.getTemperature()<38)) {
                         Integer category = 3;
-                        categoryQueue.put(category,patientsQueue.remove()); //return value van patientsQueue.remove() = patient!!
+                        categoryQueue.put(patientsQueue.poll(), category); //return value van patientsQueue.remove() = patient!!
+                System.out.println("cat3 "+patient);//debug
             }
 
             //Category 4: Mensen die koorts hebben (>=38) maar met een bekend virus rondlopen.
             else if ((!patient.isUnknownVirus())&&(patient.getTemperature()>=38)) {
-                        Integer category = 2;
-                        categoryQueue.put(category,patientsQueue.remove()); //return value van patientsQueue.remove() = patient!!
+                        Integer category = 4;
+                        categoryQueue.put(patientsQueue.poll(), category); //return value van patientsQueue.remove() = patient!!
+                System.out.println("cat4 "+patient);//debug
             }
 
         } //end for-each
@@ -122,11 +132,13 @@ public class PandemicMain {
         System.out.println("Printing patientsQueue: (after categorisation) ");
 
             System.out.println(patientsQueue);
+        System.out.println("patientsqueue size:"+patientsQueue.size());
 
 
         System.out.println("Printing categoryQueque (HashMap: ");
 
         System.out.println(categoryQueue);
+        System.out.println("categoryqueue size:"+categoryQueue.size());
 
 
 
