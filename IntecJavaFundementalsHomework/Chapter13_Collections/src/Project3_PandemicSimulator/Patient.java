@@ -86,12 +86,13 @@ public class Patient {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Patient patient = (Patient) object;
-        return getAge() == patient.getAge() && getTemperature() == patient.getTemperature() && isUnknownVirus() == patient.isUnknownVirus() && isInsured() == patient.isInsured() && Objects.equals(getNationalRegistry(), patient.getNationalRegistry()) && Objects.equals(getFullName(), patient.getFullName());
+        return Objects.equals(getNationalRegistry(), patient.getNationalRegistry()) && Objects.equals(getFullName(), patient.getFullName()); //aangepast
+        //getAge() == patient.getAge() && getTemperature() == patient.getTemperature() && isUnknownVirus() == patient.isUnknownVirus() && isInsured() == patient.isInsured() && Objects.equals(getNationalRegistry(), patient.getNationalRegistry()) && Objects.equals(getFullName(), patient.getFullName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNationalRegistry(), getFullName(), getAge(), getTemperature(), isUnknownVirus(), isInsured());
+        return Objects.hash(getNationalRegistry(), getFullName()); //aangepast //getAge(), getTemperature(), isUnknownVirus(), isInsured());
     }
 
     public static List<Patient> getAllPatients(){
